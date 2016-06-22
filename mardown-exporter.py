@@ -1,31 +1,45 @@
 import os
-import markdown
-from markdown.extensions.toc import TocExtension
+import argparse
+# I haven't internet conection to install now :(
+# import markdown
+# from markdown.extensions.toc import TocExtension
 
 
 
-os.chdir('C:/Users/rousseaua/! Projets/Sketchup/FAQ')
+if __name__ == '__main__':
+
+	def get_text_file(url):
+		"""return the content of all files"""
+		with open(url ,'r') as file:
+			return file.read()
+		return False
 
 
-try:
-	file = open('_header.part','r')
-	text = file.read()
 
-	file = open('sketchup-faq.markdown', 'r', encoding='utf-8')
-	text += file.read() 
+	parser = argparse.ArgumentParser()
+	parser.add_argument("-f", "--file", help="Specify the file to export in HTML")
+	args = parser.parse_args()
 
-	html = markdown.markdown(text, extensions=[TocExtension()] )
+	if args.file:
 
-	file = open( 'sketchup-faq.html','w')   # Trying to create a new file or open one
+		# os.chdir('C:/Users/rousseaua/! Projets/Sketchup/FAQ')
 
-	file.write(html + '</body></html>')
+		text = get_text_file('ressources/snippet.html')
 
-	file.close()
+		stylesheets = str()
+		stylesheets += get_text_file('ressources/github_flavoured_markdown.css')
+		stylesheets += get_text_file('ressources/toc.css')
+		text = text.replace('<<styles_here>>', stylesheets)
 
-except:
-	print('Something went wrong! Can\'t tell what?')
-	sys.exit(0) # quit Python
+		markdown_text = get_text_file('ressources/test.markdown')
+		text = text.replace('<<content>>', markdown_text)
+
+		file = open( 'sketchup-faq.html','w')   # Trying to create a new file or open one
+		file.write(text)
+		file.close()
 
 
-md = markdown.Markdown(extensions=['markdown.extensions.toc'])
-html = md.convert(text)
+		# md = markdown.Markdown(extensions=['markdown.extensions.toc'])
+		# html = md.convert(text)
+
+	else: print('Please specify a file to open')
