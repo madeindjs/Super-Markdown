@@ -1,5 +1,6 @@
-import os
 import argparse
+import os
+import webbrowser
 # I haven't internet conection to install now :(
 # import markdown
 # from markdown.extensions.toc import TocExtension
@@ -34,9 +35,11 @@ if __name__ == '__main__':
 		markdown_text = get_text_file('ressources/test.markdown')
 		text = text.replace('<<content>>', markdown_text)
 
-		file = open( 'sketchup-faq.html','w')   # Trying to create a new file or open one
+		export_url = 'export.html'
+		file = open( export_url,'w')   # Trying to create a new file or open one
 		file.write(text)
 		file.close()
+		webbrowser.open_new_tab(export_url)
 
 
 		# md = markdown.Markdown(extensions=['markdown.extensions.toc'])
