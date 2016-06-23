@@ -8,15 +8,7 @@ Commencer par déployer pour tous le monde et voir ensuite ce qu'il faut pour le
 
 Reunion mercredi prochain avec Gilles Vueberg
 
-
-## Store Wizzard
-
-* Les prix Store Wizzard evoluent constament donc il faut trouver une solution pour qu'ils soient rentré automatiquement
-  * Connection StoreWizzard -> Caméléon auto (pas obligatoire)
-
-* déduire les code en fonction des couleur `'26ao46{color}`
-
-~~~mermaid
+```mermaid
 graph TD;
 
 subgraph Store Wizzard
@@ -35,9 +27,41 @@ l_conf --> c_wiz2
 l_conf --> c_wiz3
 l_conf --> c_wiz4 
 
+```
 
 
-~~~
+## Store Wizzard
+
+* Les prix Store Wizzard evoluent constament donc il faut trouver une solution pour qu'ils soient rentré automatiquement
+  * Connection StoreWizzard -> Caméléon auto (pas obligatoire)
+
+* déduire les code en fonction des couleur `'26ao46{color}`
+
+```python
+print('hello {}'.format('world'))
+```
+
+
+```mermaid
+graph TD;
+
+subgraph Store Wizzard
+	c_wiz1(cabinet)
+	c_wiz2(cabinet)
+	c_wiz3(cabinet)
+	c_wiz4(cabinet)
+end
+
+subgraph Configurateur
+	l_conf(Linéaire)
+end
+
+l_conf --> c_wiz1
+l_conf --> c_wiz2
+l_conf --> c_wiz3
+l_conf --> c_wiz4 
+
+```
 
 ### Données
 
@@ -53,7 +77,7 @@ Les prix sur Store Wizzard sont en GWP , la remise change en fonction:
 * de l'enseigne
 * de la gamme de meuble
 
-~~~mermaid
+```mermaid
 graph TD;
 
 
@@ -65,7 +89,7 @@ prix_revient--frais annexes*-->prix_client
 	prix_public--remise-->prix_client
 
 
-~~~
+```
 *Frais annexes:
 
 * transports
@@ -73,7 +97,7 @@ prix_revient--frais annexes*-->prix_client
 
 ### système
 
-~~~mermaid
+```mermaid
 graph TD;
 
 
@@ -81,7 +105,7 @@ Cameleon-->Enseigne
 Enseigne--referencement-->Choix_des_meubles
 
 
-~~~
+```
 
 ### Spécial
 
@@ -98,7 +122,7 @@ Les demandes de spécial sont demandé au **Poduct Management** qui crée un nou
   * régulation
 
 
-~~~mermaid
+```mermaid
 
 graph TD;
 
@@ -117,6 +141,6 @@ CRM--préremplis-->Configurateur
 3D
 SAP
 
-~~~
+```
 
 ## Sketchup

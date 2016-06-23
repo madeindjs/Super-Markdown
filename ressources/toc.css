@@ -1,12 +1,3 @@
-div.toc {
-    position: fixed;
-    left: 0px;
-    top: 0px;
-    height: 100vh;
-    width: 300px;
-    overflow: hidden;
-}
-
 div.toc a {
   text-decoration: none;
 }
