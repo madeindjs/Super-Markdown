@@ -1,7 +1,8 @@
 # Meeting du 21/06/2016
 
-* profiter de 
-* écrire le programme en prenant en compte **Store Wizzard** et **SAP**
+[TOC]
+
+* profiter de écrire le programme en prenant en compte **Store Wizzard** et **SAP**
 
 Commencer par déployer pour tous le monde et voir ensuite ce qu'il faut pour les autres pays (sous forme de Plugin).
 

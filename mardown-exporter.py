@@ -2,8 +2,8 @@ import argparse
 import os
 import webbrowser
 # I haven't internet conection to install now :(
-# import markdown
-# from markdown.extensions.toc import TocExtension
+import markdown
+from markdown.extensions.toc import TocExtension
 
 
 
@@ -33,7 +33,8 @@ if __name__ == '__main__':
 		text = text.replace('<<styles_here>>', stylesheets)
 
 		markdown_text = get_text_file('ressources/test.markdown')
-		text = text.replace('<<content>>', markdown_text)
+		markdown_html = markdown.markdown(markdown_text, extensions=[TocExtension()] )
+		text = text.replace('<<content>>', markdown_html)
 
 		export_url = 'export.html'
 		file = open( export_url,'w')   # Trying to create a new file or open one
@@ -41,8 +42,5 @@ if __name__ == '__main__':
 		file.close()
 		webbrowser.open_new_tab(export_url)
 
-
-		# md = markdown.Markdown(extensions=['markdown.extensions.toc'])
-		# html = md.convert(text)
 
 	else: print('Please specify a file to open')
