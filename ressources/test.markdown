@@ -28,7 +28,9 @@ l_conf --> c_wiz3
 l_conf --> c_wiz4 
 
 ```
-
+* [ ] foo
+* [x] bar
+* [ ] baz
 
 ## Store Wizzard
 

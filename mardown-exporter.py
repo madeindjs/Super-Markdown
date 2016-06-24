@@ -49,7 +49,10 @@ if __name__ == '__main__':
 
 	markdown_text = get_text_file( url_md_file )
 	markdown_html = markdown.markdown(markdown_text, 
-		extensions=[TocExtension(), 'fenced_code'] )
+		extensions=[
+			TocExtension(), 
+			'fenced_code', 
+			'markdown_checklist.extension'] )
 	text = text.replace('<<content>>', markdown_html)
 
 	export_url = 'export.html'
