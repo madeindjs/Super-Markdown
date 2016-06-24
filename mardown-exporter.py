@@ -25,7 +25,8 @@ if __name__ == '__main__':
 	parser.add_argument("-f", "--file", help="Specify the markdown file to export in HTML")
 	args = parser.parse_args()
 
-
+	css_dir = 'ressources/css'
+	js_dir = 'ressources/js'
 	url_md_file = str()
 
 	if args.file: 
@@ -36,16 +37,18 @@ if __name__ == '__main__':
 
 	text = get_text_file('ressources/snippet.html')
 
+	# insert all files in css directory
 	stylesheets = str()
-	stylesheets += get_text_file('ressources/github_flavoured_markdown.css')
-	stylesheets += get_text_file('ressources/toc.css')
-	stylesheets += get_text_file('ressources/mermaid.css')
+	for file in os.listdir(css_dir):
+		stylesheets += get_text_file('{}/{}'.format(css_dir, file))
 	text = text.replace('<<styles_here>>', stylesheets)
 
+	# insert all files in js directory
 	scripts = str()
-	scripts += get_text_file('ressources/mermaid.min.js')
-	scripts += get_text_file('ressources/jquery-1.11.3.min.js')
+	for file in os.listdir(js_dir):
+		scripts += get_text_file('{}/{}'.format(js_dir, file))
 	text = text.replace('<<scripts_here>>', scripts)
+
 
 	markdown_text = get_text_file( url_md_file )
 	markdown_html = markdown.markdown(markdown_text, 
