@@ -19,6 +19,14 @@ if __name__ == '__main__':
 			print('File `{}` not found'.format(url))
 			sys.exit(0)
 
+	def get_ressources(directory):
+		"""return all files content in a directory in a big big string"""
+		ret = str()
+		for file in os.listdir(directory):
+			ret += get_text_file('{}/{}'.format(directory, file))
+
+		return ret
+
 
 
 	parser = argparse.ArgumentParser()
@@ -37,17 +45,9 @@ if __name__ == '__main__':
 
 	text = get_text_file('ressources/snippet.html')
 
-	# insert all files in css directory
-	stylesheets = str()
-	for file in os.listdir(css_dir):
-		stylesheets += get_text_file('{}/{}'.format(css_dir, file))
-	text = text.replace('<<styles_here>>', stylesheets)
-
-	# insert all files in js directory
-	scripts = str()
-	for file in os.listdir(js_dir):
-		scripts += get_text_file('{}/{}'.format(js_dir, file))
-	text = text.replace('<<scripts_here>>', scripts)
+	# insert all files ressources in text
+	text = text.replace('<<styles_here>>', get_ressources('ressources/css'))
+	text = text.replace('<<scripts_here>>', get_ressources('ressources/js'))
 
 
 	markdown_text = get_text_file( url_md_file )
