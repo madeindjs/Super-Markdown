@@ -11,7 +11,16 @@ file. It will include:
 
 ## Usage
 
+to export **one markdown file** in one **Html file**
+
     python markdown-exporter.py -f README.md
+
+
+to export **many markdown file** in one **Html file**
+
+    python markdown-exporter.py -d /home/alex/markdown_files/
+
+    
 
 ## Requirements
 

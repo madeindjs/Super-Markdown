@@ -13,5 +13,6 @@ div.toc > ul {
 
 
 div.toc li {
-  margin-bottom: 5px;
+	margin: 0;
+	padding: 0;
 }

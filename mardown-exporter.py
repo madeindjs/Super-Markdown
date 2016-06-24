@@ -30,17 +30,12 @@ if __name__ == '__main__':
 
 
 	parser = argparse.ArgumentParser()
-	parser.add_argument("-f", "--file", help="Specify the markdown file to export in HTML")
+	parser.add_argument("-f", "--file", 
+		help="export the markdown file to export in HTML")
+	parser.add_argument("-d", "--directory", 
+		help="export the markdown files in the directory in HTML")
 	args = parser.parse_args()
 
-	css_dir = 'ressources/css'
-	js_dir = 'ressources/js'
-	url_md_file = str()
-
-	if args.file: 
-		url_md_file = args.file
-	else: 
-		url_md_file = 'ressources/test.markdown'
 
 
 	text = get_text_file('ressources/snippet.html')
@@ -50,7 +45,24 @@ if __name__ == '__main__':
 	text = text.replace('<<scripts_here>>', get_ressources('ressources/js'))
 
 
-	markdown_text = get_text_file( url_md_file )
+
+	markdown_text = str()
+
+	if args.directory:
+		markdown_text = "\r\n[TOC]\r\n"
+		files=[file for file in os.listdir(args.directory) if not os.path.isdir(file)]
+
+		for file in files:
+			markdown_text+=get_text_file('{}\{}'.format(args.directory, file))
+			markdown_text += "{rn}{sep}{rn}".format(rn="\r\n", sep="---------")
+
+	elif args.file: 
+		markdown_text = get_text_file( args.file )
+
+	else:
+		markdown_text = get_text_file( 'ressources/test.markdown' )
+
+
 	markdown_html = markdown.markdown(markdown_text, 
 		extensions=[
 			TocExtension(), 
