@@ -6,6 +6,8 @@ import webbrowser
 import markdown
 from markdown.extensions.toc import TocExtension
 
+from graphviz import Digraph
+
 
 
 if __name__ == '__main__':
@@ -28,6 +30,18 @@ if __name__ == '__main__':
 		return ret
 
 
+	def search_replace_graphiz():
+		dot = Digraph(comment='The Round Table', format='svg')
+		dot.node('A', 'King Arthur')
+		dot.node('B', 'Sir Bedevere the Wise')
+		dot.node('L', 'Sir Lancelot the Brave')
+
+		dot.edges(['AB', 'AL'])
+		dot.edge('B', 'L', constraint='false')
+		return dot.pipe().decode('utf-8')
+
+
+
 
 	parser = argparse.ArgumentParser()
 	parser.add_argument("-f", "--file", 
@@ -41,6 +55,10 @@ if __name__ == '__main__':
 	text = get_text_file('ressources/snippet.html')
 
 	# insert all files ressources in text
+	graph = search_replace_graphiz()
+	print(graph)
+	text = text.replace('<<graphiz_here>>',graph )
+
 	text = text.replace('<<styles_here>>', get_ressources('ressources/css'))
 	text = text.replace('<<scripts_here>>', get_ressources('ressources/js'))
 
@@ -80,3 +98,5 @@ if __name__ == '__main__':
 		print('Can\'t open/create `export.html` file (maybe already opened?)')
 	finally:
 		file.close()
+
+	
