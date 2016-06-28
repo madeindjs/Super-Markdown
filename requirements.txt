@@ -1,2 +1,4 @@
 Markdown
 markdown-checklist
+graphviz
+beautifulsoup4
