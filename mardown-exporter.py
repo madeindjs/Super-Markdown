@@ -8,7 +8,7 @@ import webbrowser
 
 import markdown
 from markdown.extensions.toc import TocExtension
-from graphviz import Digraph
+from graphviz import  Source
 from bs4 import BeautifulSoup
 
 
@@ -39,14 +39,22 @@ if __name__ == '__main__':
 
 
 	def search_replace_graphiz():
-		dot = Digraph(comment='The Round Table', format='svg')
-		dot.node('A', 'King Arthur')
-		dot.node('B', 'Sir Bedevere the Wise')
-		dot.node('L', 'Sir Lancelot the Brave')
+		"""create a graphviz graph from source"""
+		dot = Source("""// The Round Table
+			digraph {
+			    A [label="King Arthur"]
+			    B [label="Sir Bedevere the Wise"]
+			    L [label="Sir Lancelot the Brave"]
+			        A -> B
+			        A -> L
+			        B -> L [constraint=false]
+			}
+			""", format='svg')
 
-		dot.edges(['AB', 'AL'])
-		dot.edge('B', 'L', constraint='false')
 		return dot.pipe().decode('utf-8')
+
+
+	export_url = 'export.html'
 
 
 	# create the main soup from the `snippert.html` file
@@ -59,7 +67,7 @@ if __name__ == '__main__':
 
 	# insert all files ressources in text
 	graph = search_replace_graphiz()
-	text = text.replace('<<graphiz_here>>',graph )
+	soup.find('div', attrs={'id': 'graphviz'}).append(BeautifulSoup( graph , 'html.parser') )
 
 
 	# parse arg to find file(s)
@@ -88,15 +96,15 @@ if __name__ == '__main__':
 		markdown_text = get_text_file( 'ressources/test.markdown' )
 
 
+	# convert markdown into html
 	markdown_html = markdown.markdown(markdown_text, 
 		extensions=[
 			TocExtension(), 'fenced_code', 'markdown_checklist.extension'] )
 
-
+	# insert html into body's main soup 
 	soup.body.append( BeautifulSoup(markdown_html, 'html.parser') )
 
-	export_url = 'export.html'
-
+	# writte result in file
 	try:
 		file = open(export_url,'w', encoding='utf-8')
 		file.write(soup.prettify())
