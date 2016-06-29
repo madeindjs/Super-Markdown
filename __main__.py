@@ -7,6 +7,8 @@ import webbrowser
 from SuperMarkdown.SuperMarkdown import SuperMarkdown
 
 
+__all__ = ['SuperMarkdown']
+
 if __name__ == '__main__':
 
 	# parse arg to find file(s)
@@ -30,7 +32,7 @@ if __name__ == '__main__':
 		superMarkdown.add_content(args.file)
 
 	else:# get the default markdown file `ressources/test.markdown`
-		superMarkdown.add_content('SuperMarkdown/ressources/test.markdown')
+		superMarkdown.add_content('SuperMarkdown/ressources/test.md')
 
 
 	superMarkdown.export()
