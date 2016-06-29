@@ -49,16 +49,6 @@ if __name__ == '__main__':
 		return dot.pipe().decode('utf-8')
 
 
-
-
-	parser = argparse.ArgumentParser()
-	parser.add_argument("-f", "--file", 
-		help="export the markdown file to export in HTML")
-	parser.add_argument("-d", "--directory", 
-		help="export the markdown files in the directory in HTML")
-	args = parser.parse_args()
-
-
 	# create the main soup from the `snippert.html` file
 	text = get_text_file('ressources/snippet.html')
 	soup = BeautifulSoup(text.encode('utf-8'), 'html.parser')
@@ -71,7 +61,17 @@ if __name__ == '__main__':
 	graph = search_replace_graphiz()
 	text = text.replace('<<graphiz_here>>',graph )
 
-	# Get the markdown text from file (parse arg to find file(s))
+
+	# parse arg to find file(s)
+	parser = argparse.ArgumentParser()
+	parser.add_argument("-f", "--file", 
+		help="export the markdown file to export in HTML")
+	parser.add_argument("-d", "--directory", 
+		help="export the markdown files in the directory in HTML")
+	args = parser.parse_args()
+
+
+	# Get the markdown text from file(s)
 	markdown_text = str()
 
 	if args.directory:# get all files from directory
