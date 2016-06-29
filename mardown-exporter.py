@@ -50,7 +50,7 @@ class SuperMarkdown(object):
 	def add_javascripts(self, *js_files):
 		"""add javascripts files in HTML body"""
 		# create the script tag if don't exists
-		if self.soup.script is None:
+		if self.main_soup.script is None:
 			script_tag = self.main_soup.new_tag('script')
 			self.main_soup.body.append( script_tag)
 
@@ -78,10 +78,10 @@ class SuperMarkdown(object):
 
 
 	def _add_mermaid_js(self):
-		"""add js libraries and css files"""
-		self.add_javascripts('ressources/jquery-1.11.3.min.js')
-		self.add_javascripts('ressources/mermaid.min.js')
-		self.add_stylesheets('ressources/mermaid.css')
+		"""add js libraries and css files of mermaid js"""
+		self.add_javascripts('ressources/js/jquery-1.11.3.min.js')
+		self.add_javascripts('ressources/js/mermaid.min.js')
+		self.add_stylesheets('ressources/css/mermaid.css')
 		self.main_soup.script.append('mermaid.initialize({startOnLoad:true  });')
 
 
@@ -91,7 +91,14 @@ class SuperMarkdown(object):
 		markdown_html = markdown.markdown(self.markdown_text, extensions=[
 				TocExtension(), 'fenced_code', 'markdown_checklist.extension'])
 		markdown_soup = BeautifulSoup(markdown_html, 'html.parser')
+
+		# include jquery & mermaid.js only if there are Mermaid graph
+		if markdown_soup.find('code', attrs={'class':'mermaid'}):
+			self._add_mermaid_js()
+
 		self.main_soup.body.append(markdown_soup)
+
+
 
 
 
@@ -147,9 +154,7 @@ if __name__ == '__main__':
 	
 
 
-	# include jquery & mermaid.js only if there are Mermaid graph
-	if superMarkdown.main_soup.find('code', attrs={'class':'mermaid'}):
-		superMarkdown.add_mermaid_js()
+
 		
 
 	# search in markdown html if there are Dot Graph & replace it with .svg result
