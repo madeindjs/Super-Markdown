@@ -52,10 +52,7 @@ if __name__ == '__main__':
 	soup = BeautifulSoup(text.encode('utf-8'), 'html.parser')
 
 	# insert css files and js files
-	soup.script.append( get_ressources('ressources/js') )
 	soup.style.append( get_ressources('ressources/css') )
-
-
 
 
 	# parse arg to find file(s)
@@ -89,6 +86,14 @@ if __name__ == '__main__':
 		extensions=[
 			TocExtension(), 'fenced_code', 'markdown_checklist.extension'] )
 	markdown_soup = BeautifulSoup(markdown_html, 'html.parser')
+
+
+	# include jquery & mermaid.js only if there are Mermaid graph
+	if markdown_soup.find('code', attrs={'class':'mermaid'}):
+		script_tag = soup.new_tag('script')
+		script_tag.append( get_ressources('ressources/js') )
+		script_tag.append( 'mermaid.initialize({startOnLoad:true  });')
+		soup.body.append( script_tag)
 
 	# search in markdown html if there are Dot Graph & replace it with .svg result
 	for dot_tag in markdown_soup.find_all('code', attrs={'class':'dotgraph'}):
