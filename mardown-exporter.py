@@ -15,6 +15,7 @@ from bs4 import BeautifulSoup
 
 class SuperMarkdown(object):
 	"""SuperMarkdown class"""
+
 	def __init__(self):
 		self.markdown_text = str()
 
@@ -59,10 +60,11 @@ class SuperMarkdown(object):
 
 
 
-	def __str__(self):
-		"""return the markdown text as BeatifulSoup object"""
-		self._build()
-		return self.main_soup.prettify()
+	def export(self, url='export.html'):
+		"""return the object in a file"""
+		with open(url,'w', encoding='utf-8') as file:
+			file.write(self.build())
+			webbrowser.open_new_tab(url)
 
 
 
@@ -78,7 +80,7 @@ class SuperMarkdown(object):
 
 
 	def _add_mermaid_js(self):
-		"""add js libraries and css files of mermaid js"""
+		"""add js libraries and css files of mermaid js_file"""
 		self.add_javascripts('ressources/js/jquery-1.11.3.min.js')
 		self.add_javascripts('ressources/js/mermaid.min.js')
 		self.add_stylesheets('ressources/css/mermaid.css')
@@ -86,8 +88,8 @@ class SuperMarkdown(object):
 
 
 
-	def _build(self):
-		"""convert Markdown text as html"""
+	def build(self):
+		"""convert Markdown text as html. return the html file as string"""
 		markdown_html = markdown.markdown(self.markdown_text, extensions=[
 				TocExtension(), 'fenced_code', 'markdown_checklist.extension'])
 		markdown_soup = BeautifulSoup(markdown_html, 'html.parser')
@@ -97,6 +99,7 @@ class SuperMarkdown(object):
 			self._add_mermaid_js()
 
 		self.main_soup.body.append(markdown_soup)
+		return self.main_soup.prettify()
 
 
 
@@ -120,7 +123,7 @@ if __name__ == '__main__':
 
 
 
-	export_url = 'export.html'
+	
 
 
 	superMarkdown = SuperMarkdown()
@@ -135,9 +138,6 @@ if __name__ == '__main__':
 	args = parser.parse_args()
 
 
-	# Get the markdown text from file(s)
-	markdown_text = str()
-	
 
 	if args.directory:# get all files from directory
 		superMarkdown.add_toc()
@@ -151,11 +151,6 @@ if __name__ == '__main__':
 		superMarkdown.add_content('ressources/test.markdown')
 
 
-	
-
-
-
-		
 
 	# search in markdown html if there are Dot Graph & replace it with .svg result
 	for dot_tag in superMarkdown.main_soup.find_all('code', attrs={'class':'dotgraph'}):
@@ -163,18 +158,7 @@ if __name__ == '__main__':
 		dot_tag.parent.replaceWith( graph_soup )
 
 
-	# writte result in file
-	try:
-		file = open(export_url,'w', encoding='utf-8')
-		file.write(str(superMarkdown))
-		webbrowser.open_new_tab(export_url)
-	except FileNotFoundError :
-		print('Can\'t open/create `export.html` file (maybe already opened?)')
-	finally:
-		file.close()
+	superMarkdown.export()
 
 
 
-	
-
-		
