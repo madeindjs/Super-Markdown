@@ -38,19 +38,9 @@ if __name__ == '__main__':
 
 
 
-	def search_replace_graphiz():
-		"""create a graphviz graph from source"""
-		dot = Source("""// The Round Table
-			digraph {
-			    A [label="King Arthur"]
-			    B [label="Sir Bedevere the Wise"]
-			    L [label="Sir Lancelot the Brave"]
-			        A -> B
-			        A -> L
-			        B -> L [constraint=false]
-			}
-			""", format='svg')
-
+	def text_to_graphiz(text):
+		"""create a graphviz graph from text"""
+		dot = Source( text, format='svg')
 		return dot.pipe().decode('utf-8')
 
 
@@ -65,9 +55,7 @@ if __name__ == '__main__':
 	soup.script.append( get_ressources('ressources/js') )
 	soup.style.append( get_ressources('ressources/css') )
 
-	# insert all files ressources in text
-	graph = search_replace_graphiz()
-	soup.find('div', attrs={'id': 'graphviz'}).append(BeautifulSoup( graph , 'html.parser') )
+
 
 
 	# parse arg to find file(s)
@@ -100,9 +88,15 @@ if __name__ == '__main__':
 	markdown_html = markdown.markdown(markdown_text, 
 		extensions=[
 			TocExtension(), 'fenced_code', 'markdown_checklist.extension'] )
+	markdown_soup = BeautifulSoup(markdown_html, 'html.parser')
+
+	# search in markdown html if there are Dot Graph & replace it with .svg result
+	for dot_tag in markdown_soup.find_all('code', attrs={'class':'dotgraph'}):
+		graph_soup = BeautifulSoup( text_to_graphiz(dot_tag.string) , 'html.parser')
+		dot_tag.parent.replaceWith( graph_soup )
 
 	# insert html into body's main soup 
-	soup.body.append( BeautifulSoup(markdown_html, 'html.parser') )
+	soup.body.append( markdown_soup )
 
 	# writte result in file
 	try:
