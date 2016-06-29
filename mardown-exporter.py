@@ -79,6 +79,13 @@ class SuperMarkdown(object):
 
 
 
+	def _text_to_graphiz(self, text):
+		"""create a graphviz graph from text"""
+		dot = Source( text, format='svg')
+		return dot.pipe().decode('utf-8')
+
+
+
 	def _add_mermaid_js(self):
 		"""add js libraries and css files of mermaid js_file"""
 		self.add_javascripts('ressources/js/jquery-1.11.3.min.js')
@@ -98,6 +105,12 @@ class SuperMarkdown(object):
 		if markdown_soup.find('code', attrs={'class':'mermaid'}):
 			self._add_mermaid_js()
 
+		# search in markdown html if there are Dot Graph & replace it with .svg result
+		for dot_tag in markdown_soup.find_all('code', attrs={'class':'dotgraph'}):
+			grap_svg = self._text_to_graphiz(dot_tag.string)
+			graph_soup = BeautifulSoup( grap_svg, 'html.parser')
+			dot_tag.parent.replaceWith( graph_soup )
+
 		self.main_soup.body.append(markdown_soup)
 		return self.main_soup.prettify()
 
@@ -111,24 +124,6 @@ class SuperMarkdown(object):
 
 if __name__ == '__main__':
 
-
-
-
-
-	def text_to_graphiz(text):
-		"""create a graphviz graph from text"""
-		dot = Source( text, format='svg')
-		return dot.pipe().decode('utf-8')
-
-
-
-
-	
-
-
-	superMarkdown = SuperMarkdown()
-
-
 	# parse arg to find file(s)
 	parser = argparse.ArgumentParser()
 	parser.add_argument("-f", "--file", 
@@ -137,6 +132,8 @@ if __name__ == '__main__':
 		help="export the markdown files in the directory in HTML")
 	args = parser.parse_args()
 
+
+	superMarkdown = SuperMarkdown()
 
 
 	if args.directory:# get all files from directory
@@ -151,14 +148,5 @@ if __name__ == '__main__':
 		superMarkdown.add_content('ressources/test.markdown')
 
 
-
-	# search in markdown html if there are Dot Graph & replace it with .svg result
-	for dot_tag in superMarkdown.main_soup.find_all('code', attrs={'class':'dotgraph'}):
-		graph_soup = BeautifulSoup( text_to_graphiz(dot_tag.string) , 'html.parser')
-		dot_tag.parent.replaceWith( graph_soup )
-
-
 	superMarkdown.export()
-
-
 
