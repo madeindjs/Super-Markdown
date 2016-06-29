@@ -1,8 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-import argparse
-import os
 import sys
 import webbrowser
 
@@ -20,11 +17,11 @@ class SuperMarkdown(object):
 		self.markdown_text = str()
 
 		# create the main soup from the `snippert.html` file
-		html_snippet = self._text_file('ressources/snippet.html')
+		html_snippet = self._text_file('SuperMarkdown/ressources/snippet.html')
 		self.main_soup = BeautifulSoup(
 			html_snippet.encode('utf-8'), 'html.parser')
-		self.add_stylesheets('ressources/css/github_flavoured_markdown.css')
-		self.add_stylesheets('ressources/css/toc.css')
+		self.add_stylesheets('SuperMarkdown/ressources/css/github_flavoured_markdown.css')
+		self.add_stylesheets('SuperMarkdown/ressources/css/toc.css')
 
 
 
@@ -88,9 +85,9 @@ class SuperMarkdown(object):
 
 	def _add_mermaid_js(self):
 		"""add js libraries and css files of mermaid js_file"""
-		self.add_javascripts('ressources/js/jquery-1.11.3.min.js')
-		self.add_javascripts('ressources/js/mermaid.min.js')
-		self.add_stylesheets('ressources/css/mermaid.css')
+		self.add_javascripts('SuperMarkdown/ressources/js/jquery-1.11.3.min.js')
+		self.add_javascripts('SuperMarkdown/ressources/js/mermaid.min.js')
+		self.add_stylesheets('SuperMarkdown/ressources/css/mermaid.css')
 		self.main_soup.script.append('mermaid.initialize({startOnLoad:true  });')
 
 
@@ -113,40 +110,3 @@ class SuperMarkdown(object):
 
 		self.main_soup.body.append(markdown_soup)
 		return self.main_soup.prettify()
-
-
-
-
-
-
-
-
-
-if __name__ == '__main__':
-
-	# parse arg to find file(s)
-	parser = argparse.ArgumentParser()
-	parser.add_argument("-f", "--file", 
-		help="export the markdown file to export in HTML")
-	parser.add_argument("-d", "--directory", 
-		help="export the markdown files in the directory in HTML")
-	args = parser.parse_args()
-
-
-	superMarkdown = SuperMarkdown()
-
-
-	if args.directory:# get all files from directory
-		superMarkdown.add_toc()
-		files=[file for file in os.listdir(args.directory) if not os.path.isdir(file)]
-		superMarkdown.add_content(*files)
-
-	elif args.file:# get the file from directory
-		superMarkdown.add_content(args.file)
-
-	else:# get the default markdown file `ressources/test.markdown`
-		superMarkdown.add_content('ressources/test.markdown')
-
-
-	superMarkdown.export()
-
