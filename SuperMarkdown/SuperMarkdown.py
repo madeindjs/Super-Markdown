@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import sys
+import sys, os
 import webbrowser
+import tempfile
 
 import markdown
 from markdown.extensions.toc import TocExtension
@@ -13,28 +14,34 @@ from bs4 import BeautifulSoup
 class SuperMarkdown(object):
 	"""SuperMarkdown class"""
 
+	resources_path = '{}/ressources'.format(os.path.dirname(__file__))
+	export_url = '{}/export.html'.format(tempfile.gettempdir())
+
+
 	def __init__(self):
 		self.markdown_text = str()
 
 		# create the main soup from the `snippert.html` file
-		html_snippet = self._text_file('SuperMarkdown/ressources/snippet.html')
+		html_snippet = self._text_file('{}/snippet.html'.format(self.resources_path))
 		self.main_soup = BeautifulSoup(
 			html_snippet.encode('utf-8'), 'html.parser')
-		self.add_stylesheets('SuperMarkdown/ressources/css/github_flavoured_markdown.css')
-		self.add_stylesheets('SuperMarkdown/ressources/css/toc.css')
+		self.add_stylesheets('{}/css/github_flavoured_markdown.css'.format(self.resources_path))
+		self.add_stylesheets('{}/css/toc.css'.format(self.resources_path))
 
 
 
-	def add_content(self, *markdown_files):
-		"""add the content of the file(s) in HTML body"""
+	def add_content(self, *markdown_files, text=None):
+		"""add the content of the file(s) (or the text in string) in HTML body"""
 		for markdown_file in markdown_files:
 			self.markdown_text += self._text_file(markdown_file)
 
+		if text: self.markdown_text += text
 
 
-	def add_toc(self, markdown_file):
+
+	def add_toc(self):
 		"""add the table of content"""
-		self.markdown_text += "\r\n[TOC]\r\n"
+		self.markdown_text += "\r\n \r\n [TOC] \r\n \r\n"
 
 
 
@@ -57,11 +64,34 @@ class SuperMarkdown(object):
 
 
 
-	def export(self, url='export.html'):
+	def export(self, url=export_url):
 		"""return the object in a file"""
+
 		with open(url,'w', encoding='utf-8') as file:
 			file.write(self.build())
 			webbrowser.open_new_tab(url)
+
+
+
+	def build(self):
+		"""convert Markdown text as html. return the html file as string"""
+		markdown_html = markdown.markdown(self.markdown_text, extensions=[
+				TocExtension(), 'fenced_code', 'markdown_checklist.extension'])
+		markdown_soup = BeautifulSoup(markdown_html, 'html.parser')
+
+		# include jquery & mermaid.js only if there are Mermaid graph
+		if markdown_soup.find('code', attrs={'class':'mermaid'}):
+			self._add_mermaid_js()
+
+		# search in markdown html if there are Dot Graph & replace it with .svg result
+		for dot_tag in markdown_soup.find_all('code', attrs={'class':'dotgraph'}):
+			grap_svg = self._text_to_graphiz(dot_tag.string)
+			graph_soup = BeautifulSoup( grap_svg, 'html.parser')
+			dot_tag.parent.replaceWith( graph_soup )
+
+		self.main_soup.body.append(markdown_soup)
+		return self.main_soup.prettify()
+
 
 
 
@@ -85,28 +115,11 @@ class SuperMarkdown(object):
 
 	def _add_mermaid_js(self):
 		"""add js libraries and css files of mermaid js_file"""
-		self.add_javascripts('SuperMarkdown/ressources/js/jquery-1.11.3.min.js')
-		self.add_javascripts('SuperMarkdown/ressources/js/mermaid.min.js')
-		self.add_stylesheets('SuperMarkdown/ressources/css/mermaid.css')
+		self.add_javascripts('{}/js/jquery-1.11.3.min.js'.format(self.resources_path))
+		self.add_javascripts('{}/js/mermaid.min.js'.format(self.resources_path))
+		self.add_stylesheets('{}/css/mermaid.css'.format(self.resources_path))
 		self.main_soup.script.append('mermaid.initialize({startOnLoad:true  });')
 
 
 
-	def build(self):
-		"""convert Markdown text as html. return the html file as string"""
-		markdown_html = markdown.markdown(self.markdown_text, extensions=[
-				TocExtension(), 'fenced_code', 'markdown_checklist.extension'])
-		markdown_soup = BeautifulSoup(markdown_html, 'html.parser')
 
-		# include jquery & mermaid.js only if there are Mermaid graph
-		if markdown_soup.find('code', attrs={'class':'mermaid'}):
-			self._add_mermaid_js()
-
-		# search in markdown html if there are Dot Graph & replace it with .svg result
-		for dot_tag in markdown_soup.find_all('code', attrs={'class':'dotgraph'}):
-			grap_svg = self._text_to_graphiz(dot_tag.string)
-			graph_soup = BeautifulSoup( grap_svg, 'html.parser')
-			dot_tag.parent.replaceWith( graph_soup )
-
-		self.main_soup.body.append(markdown_soup)
-		return self.main_soup.prettify()
