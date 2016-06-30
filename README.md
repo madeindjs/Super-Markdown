@@ -30,11 +30,11 @@ Usage
 
 to export **one markdown file** in one **Html file**
 
-    python markdown-exporter.py -f README.md
+    super-markdown -f README.md
 
 to export **many markdown file** in one **Html file**
 
-    python markdown-exporter.py -d /home/alex/markdown_files/
+    super-markdown -d /home/alex/markdown_files/
 
 
 ### API usage

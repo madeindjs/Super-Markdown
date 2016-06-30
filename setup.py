@@ -49,11 +49,11 @@ setup(
     ],
 
 
-    # entry_points = {
-    #     'console_scripts': [
-    #         'proclame-sm = sm_lib.core:proclamer',
-    #     ],
-    # },
+    entry_points = {
+        'console_scripts': [
+            'super-markdown = SuperMarkdown.SuperMarkdown:main',
+        ],
+    },
 
 
 )
