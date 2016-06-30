@@ -22,6 +22,10 @@ Instalation
     cd super-markdown
     python setup.py install
 
+### New School
+
+    pip install supermarkdown
+
 
 Usage
 -----
@@ -41,6 +45,7 @@ to export **many markdown file** in one **Html file**
 
 #### Hello World
 
+~~~Python
     from SuperMarkdown import SuperMarkdown
 
     supermd = SuperMarkdown()
@@ -49,46 +54,62 @@ to export **many markdown file** in one **Html file**
 
     supermd.add_content(text=content)
     supermd.export()
+~~~
+
+
 
 
 #### Add [Table of Content][TOC]
 
+~~~Python
     supermd.add_TOC(text=content)
     content = "## Other title\r\n## Other title\r\n###sutitle\r\n## Other title"
     supermd.add_content(text=content)
     supermd.export()
+~~~
+
+
 
 
 #### Add [Dot Graph][Dot language]
 
+~~~Python
     dotgraph = """~~~dotgraph
         digraph "pet-shop" {
-	        graph [rankdir=LR]
-	        node [shape=plaintext]
-	        edge [arrowhead=vee arrowsize=2]
-	        parrot
-	        dead
-	        parrot -> dead
+            graph [rankdir=LR]
+            node [shape=plaintext]
+            edge [arrowhead=vee arrowsize=2]
+            parrot
+            dead
+            parrot -> dead
         }
         ~~~"""
     supermd.add_content(text=dotgraph)
     supermd.export()
+~~~
+
+
 
 
 #### Convert markdown file(s)
 
 ##### one file
 
+~~~Python
     supermd = SuperMarkdown()
     supermd.add_content('/home/alex/markdown_files/a_file.md')
     supermd.export()
+~~~
+
 
 ##### many files
 
+~~~Python
     files = os.listdir('/home/alex/markdown_files/')
     supermd = SuperMarkdown()
-	supermd.add_content(*files)
+    supermd.add_content(*files)
     supermd.export()
+~~~
 
 
 Syntax
