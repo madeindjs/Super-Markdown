@@ -52,15 +52,17 @@ class SuperMarkdown(object):
 
 
 
-	def add_javascripts(self, *js_files):
+	def add_javascripts(self, *js_files, text=None):
 		"""add javascripts files in HTML body"""
 		# create the script tag if don't exists
 		if self.main_soup.script is None:
 			script_tag = self.main_soup.new_tag('script')
-			self.main_soup.body.append( script_tag)
+			self.main_soup.body.append(	script_tag)
 
 		for js_file in js_files:
 			self.main_soup.script.append( self._text_file(js_file) )
+
+		if text: self.main_soup.script.append(text)
 
 
 
@@ -79,9 +81,13 @@ class SuperMarkdown(object):
 				TocExtension(), 'fenced_code', 'markdown_checklist.extension'])
 		markdown_soup = BeautifulSoup(markdown_html, 'html.parser')
 
-		# include jquery & mermaid.js only if there are Mermaid graph
+		# include HighLight.js if there <code> tag anywhere
+		if markdown_soup.find('code'):
+			self._add_highlight()
+
+		# include mermaid.js only if there are Mermaid graph
 		if markdown_soup.find('code', attrs={'class':'mermaid'}):
-			self._add_mermaid_js()
+			self._add_mermaid()
 
 		# search in markdown html if there are Dot Graph & replace it with .svg result
 		for dot_tag in markdown_soup.find_all('code', attrs={'class':'dotgraph'}):
@@ -113,13 +119,26 @@ class SuperMarkdown(object):
 
 
 
-	def _add_mermaid_js(self):
-		"""add js libraries and css files of mermaid js_file"""
-		self.add_javascripts('{}/js/jquery-1.11.3.min.js'.format(self.resources_path))
-		self.add_javascripts('{}/js/mermaid.min.js'.format(self.resources_path))
+	def _add_mermaid(self):
+		"""add js libraries and css files of mermaid.js"""
+		self.add_javascripts(
+			'{}/js/jquery-1.11.3.min.js'.format(self.resources_path),
+			'{}/js/mermaid.min.js'.format(self.resources_path),
+			text='mermaid.initialize({startOnLoad:true  });'
+			)
 		self.add_stylesheets('{}/css/mermaid.css'.format(self.resources_path))
-		self.main_soup.script.append('mermaid.initialize({startOnLoad:true  });')
 
 
 
-
+	def _add_highlight(self):
+		"""add js libraries and css files of Highlight.js"""
+		self.add_javascripts(
+			'{}/js/jquery-1.11.3.min.js'.format(self.resources_path),
+			'{}/js/highlight.min.js'.format(self.resources_path),
+			text="""$(document).ready(function() {
+				  $('pre code').each(function(i, block) {
+				    hljs.highlightBlock(block);
+				  });
+				});"""
+			)
+		self.add_stylesheets('{}/css/highlight.min.css'.format(self.resources_path))
