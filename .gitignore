@@ -1,2 +1,6 @@
 *.pyc
 export.html
+
+build/*
+dist/*
+SuperMarkdown.egg-info/*

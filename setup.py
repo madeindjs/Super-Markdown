@@ -18,8 +18,14 @@ setup(
     description="export a complex Markdown file into a standalone HTML file.",
     long_description=open('README.md').read(),
 
-    install_requires= ['Markdown','markdown-checklist','graphviz','beautifulsoup4']
+    install_requires= ['Markdown','markdown-checklist','graphviz','beautifulsoup4'],
+
+
     include_package_data=True,
+    eager_resources={'':[
+        'snippet.html',
+        ]},
+
 
     url='https://github.com/madeindjs/Super-Markdown',
 

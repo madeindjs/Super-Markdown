@@ -7,7 +7,6 @@ import webbrowser
 from SuperMarkdown.SuperMarkdown import SuperMarkdown
 
 
-__all__ = ['SuperMarkdown']
 
 if __name__ == '__main__':
 
