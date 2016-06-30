@@ -33,7 +33,7 @@ setup(
     classifiers=[
         "Programming Language :: Python",
         "Development Status :: 4 - Beta",
-        "License :: MIT",
+        "License :: OSI Approved :: MIT License",
         "Natural Language :: English",
         "Operating System :: Microsoft :: Windows :: Windows 7",
         "Programming Language :: Python :: 3.4",
