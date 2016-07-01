@@ -6,46 +6,57 @@ a Python library to export a complex Markdown file into a standalone HTML file.
 
 It will include:
 
-* [Mermaid.js][mermaid.js] to create diagrams with javascript
-* [graphviz][graphviz] to create Diagrams in [Dot language][Dot language]
-* [Markdown-TOC][TOC] to create Table of Content 
-* [markdown-checklist][markdown-checklist] to support create Checklists
-* [Github Flavoured MarkdownStylesheet][GFM]
+* `Mermaid.js <https://github.com/knsv/mermaid>`_ to create diagrams with javascript
+* `graphviz <https://pypi.python.org/pypi/graphviz>`_ to create Diagrams in [Dot language][Dot language]
+* `Markdown-TOC <https://pythonhosted.org/Markdown/extensions/toc.html>`_ to create Table of Content 
+* markdown-checklist_ [markdown-checklist] to support create Checklists
+* `Github Flavoured MarkdownStylesheet <https://gist.github.com/andyferra/2554919>`__
+
+
+
 
 
 Instalation
 -----------
 
-### Old School
+Old School
+``````````
+you can install it with clone this repo::
 
     git clone https://github.com/madeindjs/super-markdown.git
     cd super-markdown
     python setup.py install
 
-### New School
+
+New School
+``````````
+Or you can install it with pip::
 
     pip install supermarkdown
-
 
 Usage
 -----
 
-### Command line usage
+Command line usage
+``````````````````
 
-to export **one markdown file** in one **Html file**
+to export **one markdown file** in one **Html file**::
 
     super-markdown -f README.md
 
-to export **many markdown file** in one **Html file**
+to export **many markdown file** in one **Html file**::
 
     super-markdown -d /home/alex/markdown_files/
 
 
-### API usage
+API usage
+`````````
 
-#### Hello World
+Hello World
+''''''''''''
 
-~~~Python
+::
+
     from SuperMarkdown import SuperMarkdown
 
     supermd = SuperMarkdown()
@@ -54,26 +65,23 @@ to export **many markdown file** in one **Html file**
 
     supermd.add_content(text=content)
     supermd.export()
-~~~
 
 
+Add Table of Content
+''''''''''''''''''''
+::
 
-
-#### Add [Table of Content][TOC]
-
-~~~Python
     supermd.add_TOC(text=content)
     content = "## Other title\r\n## Other title\r\n###sutitle\r\n## Other title"
     supermd.add_content(text=content)
     supermd.export()
-~~~
 
 
 
+Add Dot Graph
+'''''''''''''
+::
 
-#### Add [Dot Graph][Dot language]
-
-~~~Python
     dotgraph = """~~~dotgraph
         digraph "pet-shop" {
             graph [rankdir=LR]
@@ -86,71 +94,77 @@ to export **many markdown file** in one **Html file**
         ~~~"""
     supermd.add_content(text=dotgraph)
     supermd.export()
-~~~
 
 
 
+Convert markdown file(s)
+''''''''''''''''''''''''
 
-#### Convert markdown file(s)
 
-##### one file
+one file
+^^^^^^^^
 
-~~~Python
+::
+
     supermd = SuperMarkdown()
     supermd.add_content('/home/alex/markdown_files/a_file.md')
     supermd.export()
-~~~
 
 
-##### many files
 
-~~~Python
+many files
+^^^^^^^^^^
+
+::
+
     files = os.listdir('/home/alex/markdown_files/')
     supermd = SuperMarkdown()
     supermd.add_content(*files)
     supermd.export()
-~~~
+
+
 
 
 Syntax
 ------
 
-### Table of content
+Table of content
+````````````````
 
 To create a [Table of content][TOC] you just need to insert `[TOC]` 
 in your markdown file
 
 
-### Markdown
+Markdown
+````````
 
-[Markdown-Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
-
-
-### Mermaid.js
-
-[Mermaid.js Basic Syntax](https://knsv.github.io/mermaid/#flowcharts-basic-syntax)
+`Markdown-Cheatsheet <https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet>`_
 
 
-### Dot Language
+Mermaid.js
+``````````
 
-[Dot Language Cheatsheet](http://www.graphviz.org/content/dot-language)
+`Mermaid.js Basic Syntax <https://knsv.github.io/mermaid/#flowcharts-basic-syntax>`_
 
 
+Dot Language
+````````````
+
+`Dot Language Cheatsheet <http://www.graphviz.org/content/dot-language>`_
 
     
 
 Requirements
 ------------
 
-First you need to install [graphviz](http://www.graphviz.org/Download..php) on
-your computer
+First you need to `download graphviz <http://www.graphviz.org/Download..php>`_ & install on your computer
 
-Then you need to install these python librairy
+Then you need to install these python libraries
 
-* [Python-Markdown][Python-Markdown] 
-* [markdown-checklist][Python-Markdown]
-* [graphviz][graphviz]
-* [beautifulsoup4](https://pypi.python.org/pypi/beautifulsoup4)
+* `Python-Markdown <https://pythonhosted.org/Markdown/>`_
+* `markdown-checklist <https://github.com/FND/markdown-checklist>`_
+* graphviz_
+* `beautifulsoup4 <https://pypi.python.org/pypi/beautifulsoup4>`_
 
 You can do it quickly with this command `pip install -r requirements.txt`
 
@@ -158,22 +172,20 @@ You can do it quickly with this command `pip install -r requirements.txt`
 Author
 ------
 
-[Rousseau Alexandre][madeindjs]
+`Rousseau Alexandre <https://github.com/madeindjs/>`_.
 
 License
 -------
 
-[MIT](https://opensource.org/licenses/MIT)
+`MIT <https://opensource.org/licenses/MIT>`_
 
 
-[super-markdown]: https://github.com/madeindjs/Super-Markdown.git
-
-[Python-Markdown]: https://pythonhosted.org/Markdown/
-[graphviz]: https://pypi.python.org/pypi/graphviz
-[TOC]: https://pythonhosted.org/Markdown/extensions/toc.html
-[markdown-checklist]: https://github.com/FND/markdown-checklist
-[mermaid.js]: https://github.com/knsv/mermaid
-[GFM]: https://gist.github.com/andyferra/2554919
-[Dot language]: https://en.wikipedia.org/wiki/DOT_(graph_description_language)
-
-[madeindjs]: https://github.com/madeindjs/
+.. _super-markdown: https://github.com/madeindjs/Super-Markdown.git
+.. _graphviz: https://pypi.python.org/pypi/graphviz
+.. _toc: https://pythonhosted.org/Markdown/extensions/toc.html
+.. _python: http://www.python.org/
+.. _markdown-checklist: https://github.com/FND/markdown-checklist
+.. _mermaid-js: https://github.com/knsv/mermaid
+.. _gfm: https://gist.github.com/andyferra/2554919
+.. _dot-language: https://en.wikipedia.org/wiki/DOT_(graph_description_language)
+.. _madeindjs: https://github.com/madeindjs/
