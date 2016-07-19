@@ -76,7 +76,8 @@ class SuperMarkdown(object):
 	def build(self):
 		"""convert Markdown text as html. return the html file as string"""
 		markdown_html = markdown.markdown(self.markdown_text, extensions=[
-				TocExtension(), 'fenced_code', 'markdown_checklist.extension'])
+				TocExtension(), 'fenced_code', 'markdown_checklist.extension', 
+				'markdown.extensions.tables'])
 		markdown_soup = BeautifulSoup(markdown_html, 'html.parser')
 
 		# include jquery & mermaid.js only if there are Mermaid graph
