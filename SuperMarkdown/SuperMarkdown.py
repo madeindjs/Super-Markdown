@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 import sys, os , argparse
 import webbrowser
-import tempfile
 
 import markdown
 from markdown.extensions.toc import TocExtension
@@ -15,7 +14,7 @@ class SuperMarkdown(object):
 	"""SuperMarkdown class"""
 
 	resources_path = '{}/ressources'.format(os.path.dirname(__file__))
-	export_url = '{}/export.html'.format(tempfile.gettempdir())
+	export_url = 'export.html'
 
 
 	def __init__(self):
