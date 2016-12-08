@@ -18,13 +18,18 @@ Instalation
 
 ### Old School
 
-    git clone https://github.com/madeindjs/super-markdown.git
-    cd super-markdown
-    python setup.py install
+```bash
+git clone https://github.com/madeindjs/super-markdown.git
+cd super-markdown
+python setup.py install
+```
+
 
 ### New School
 
-    pip install supermarkdown
+```bash
+pip install supermarkdown
+```
 
 
 Usage
@@ -32,72 +37,86 @@ Usage
 
 ### Command line usage
 
-to export **one markdown file** in one **Html file**
+* export **one** markdown file in **one** Html file
 
-    `super-markdown -f README.md`
+```bash
+super-markdown -f README.md
+```
 
-to export **many markdown file** in one **Html file**
 
-    `super-markdown -d /home/alex/markdown_files/`
+* export **many** markdown files in **one** Html file
 
-additional options:
+```bash
+super-markdown -d /home/alex/markdown_files/
+```
 
-    Choose the name of the output file:
-    `super-markdown -d /home/alex/markdown_files/ -o my_concatenated_file.html`
-    Prevent the browser from opening:
-    `super-markdown -d /home/alex/markdown_files/ -no_browser`    
+#### additional options
+
+* Choose the name of the output file
+
+```bash
+super-markdown -d /home/alex/markdown_files/ -o my_concatenated_file.html
+```
+
+* Prevent the browser from opening
+
+```bash
+super-markdown -d /home/alex/markdown_files/ -no_browser
+```
+
+
 
 ### API usage
 
 #### Hello World
 
-~~~Python
-    from SuperMarkdown import SuperMarkdown
+```Python
+from SuperMarkdown import SuperMarkdown
 
-    supermd = SuperMarkdown()
-    content = "# Hello World\r\n"
-    content += "[SuperMarkdown](https://github.com/madeindjs/Super-Markdown) is awesome!"
+supermd = SuperMarkdown()
+content = "# Hello World\r\n"
+content += "[SuperMarkdown](https://github.com/madeindjs/Super-Markdown) is awesome!"
 
-    supermd.add_content(text=content)
+supermd.add_content(text=content)
 
-    supermd.export()
-~~~
+supermd.export()
+```
 
-~~~Python
-    # Additional options
+```Python
+# Additional options
 
-    supermd.export_url = 'my_export_url.html'  # to change the export filename
-    supermd.open_browser = False  # to deactivate browser opening
-~~~
+supermd.export_url = 'my_export_url.html'  # to change the export filename
+supermd.open_browser = False  # to deactivate browser opening
+```
 
 #### Add [Table of Content][TOC]
 
-~~~Python
-    supermd.add_TOC(text=content)
-    content = "## Other title\r\n## Other title\r\n###sutitle\r\n## Other title"
-    supermd.add_content(text=content)
-    supermd.export()
-~~~
+```Python
+supermd.add_TOC(text=content)
+content = "## Other title\r\n## Other title\r\n###sutitle\r\n## Other title"
+supermd.add_content(text=content)
+supermd.export()
+```
 
 
 
 
 #### Add [Dot Graph][Dot language]
 
-~~~Python
-    dotgraph = """~~~dotgraph
-        digraph "pet-shop" {
-            graph [rankdir=LR]
-            node [shape=plaintext]
-            edge [arrowhead=vee arrowsize=2]
-            parrot
-            dead
-            parrot -> dead
-        }
-        ~~~"""
-    supermd.add_content(text=dotgraph)
-    supermd.export()
-~~~
+```Python
+dotgraph = """```dotgraph
+    digraph "pet-shop" {
+        graph [rankdir=LR]
+        node [shape=plaintext]
+        edge [arrowhead=vee arrowsize=2]
+        parrot
+        dead
+        parrot -> dead
+    }
+    ```"""
+supermd.add_content(text=dotgraph)
+supermd.export()
+```
 
 
 
@@ -106,21 +125,21 @@ additional options:
 
 ##### one file
 
-~~~Python
-    supermd = SuperMarkdown()
-    supermd.add_content('/home/alex/markdown_files/a_file.md')
-    supermd.export()
-~~~
+```Python
+supermd = SuperMarkdown()
+supermd.add_content('/home/alex/markdown_files/a_file.md')
+supermd.export()
+```
 
 
 ##### many files
 
-~~~Python
-    files = os.listdir('/home/alex/markdown_files/')
-    supermd = SuperMarkdown()
-    supermd.add_content(*files)
-    supermd.export()
-~~~
+```Python
+files = os.listdir('/home/alex/markdown_files/')
+supermd = SuperMarkdown()
+supermd.add_content(*files)
+supermd.export()
+```
 
 
 Syntax
@@ -147,9 +166,6 @@ in your markdown file
 [Dot Language Cheatsheet](http://www.graphviz.org/content/dot-language)
 
 
-
-
-
 Requirements
 ------------
 
@@ -170,6 +186,11 @@ Author
 ------
 
 [Rousseau Alexandre][madeindjs]
+
+Contributors
+------------
+
+* [Vifespoir](https://github.com/Vifespoir)
 
 License
 -------
