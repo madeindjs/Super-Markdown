@@ -10,9 +10,9 @@
 	It will include:
 
 	* [Mermaid.js][mermaid.js] to create diagrams with javascript
-	* [graphviz][graphviz] to create Diagrams in 
+	* [graphviz][graphviz] to create Diagrams in
 	 [Dot language](https://en.wikipedia.org/wiki/DOT_(graph_description_language))
-	* [Markdown-TOC][Markdown-TOC] to create Table of Content 
+	* [Markdown-TOC][Markdown-TOC] to create Table of Content
 	* [markdown-checklist][markdown-checklist] to support create Checklists
 	* [Github Flavoured MarkdownStylesheet][GFM]
 
@@ -41,7 +41,7 @@
 """
 
 
-__version__ = "0.2.2"
+__version__ = "0.2.3"
 
 
 from SuperMarkdown.SuperMarkdown import SuperMarkdown
