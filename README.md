@@ -8,7 +8,7 @@ It will include:
 
 * [Mermaid.js][mermaid.js] to create diagrams with javascript
 * [graphviz][graphviz] to create Diagrams in [Dot language][Dot language]
-* [Markdown-TOC][TOC] to create Table of Content 
+* [Markdown-TOC][TOC] to create Table of Content
 * [markdown-checklist][markdown-checklist] to support create Checklists
 * [Github Flavoured MarkdownStylesheet][GFM]
 
@@ -34,12 +34,18 @@ Usage
 
 to export **one markdown file** in one **Html file**
 
-    super-markdown -f README.md
+    `super-markdown -f README.md`
 
 to export **many markdown file** in one **Html file**
 
-    super-markdown -d /home/alex/markdown_files/
+    `super-markdown -d /home/alex/markdown_files/`
 
+additional options:
+
+    Choose the name of the output file:
+    `super-markdown -d /home/alex/markdown_files/ -o my_concatenated_file.html`
+    Prevent the browser from opening:
+    `super-markdown -d /home/alex/markdown_files/ -no_browser`    
 
 ### API usage
 
@@ -53,11 +59,16 @@ to export **many markdown file** in one **Html file**
     content += "[SuperMarkdown](https://github.com/madeindjs/Super-Markdown) is awesome!"
 
     supermd.add_content(text=content)
+
     supermd.export()
 ~~~
 
+~~~Python
+    # Additional options
 
-
+    supermd.export_url = 'my_export_url.html'  # to change the export filename
+    supermd.open_browser = False  # to deactivate browser opening
+~~~
 
 #### Add [Table of Content][TOC]
 
@@ -117,7 +128,7 @@ Syntax
 
 ### Table of content
 
-To create a [Table of content][TOC] you just need to insert `[TOC]` 
+To create a [Table of content][TOC] you just need to insert `[TOC]`
 in your markdown file
 
 
@@ -137,7 +148,7 @@ in your markdown file
 
 
 
-    
+
 
 Requirements
 ------------
@@ -147,7 +158,7 @@ your computer
 
 Then you need to install these python librairy
 
-* [Python-Markdown][Python-Markdown] 
+* [Python-Markdown][Python-Markdown]
 * [markdown-checklist][Python-Markdown]
 * [graphviz][graphviz]
 * [beautifulsoup4](https://pypi.python.org/pypi/beautifulsoup4)
