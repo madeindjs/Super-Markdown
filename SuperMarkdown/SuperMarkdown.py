@@ -28,7 +28,7 @@ class SuperMarkdown(object):
         self.export_url = 'export.html'  # allow users to change it
         self.open_browser = True  # allow user to disable the opening of the web-browser
 
-    def add_content(self, *markdown_files, text=None):
+    def add_content(self, text=None, *markdown_files):
         """add the content of the file(s) (or the text in string) in HTML body"""
         for markdown_file in markdown_files:
             self.markdown_text += self._text_file(markdown_file)

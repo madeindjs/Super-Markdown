@@ -38,13 +38,11 @@ setup(
         "Operating System :: Microsoft :: Windows :: Windows 7",
         "Programming Language :: Python :: 3.4",
         "Topic :: Communications",
-        "Topic :: Communications :: Email :: Filters ",
-        "Topic :: Internet :: WWW/HTTP :: Dynamic Content :: CGI Tools/Libraries ",
-        "Topic :: Internet :: WWW/HTTP :: Site Management ",
-        "Topic :: Software Development :: Documentation ",
-        "Topic :: Software Development :: Libraries :: Python Modules ",
-        "Topic :: Text Processing :: Filters ",
-        "Topic :: Text Processing :: Markup :: HTML ",
+        "Topic :: Internet :: WWW/HTTP :: Site Management",
+        "Topic :: Software Development :: Documentation",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: Text Processing :: Filters",
+        "Topic :: Text Processing :: Markup :: HTML",
 
     ],
 
