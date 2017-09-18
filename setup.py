@@ -9,7 +9,7 @@ setup(
 
     name='SuperMarkdown',
 
-    version=SuperMarkdown.__version__,
+    version="0.2.4",
     packages=find_packages(),
 
     author="Rousseau Alexandre",
@@ -18,7 +18,7 @@ setup(
     description="export a complex Markdown file into a standalone HTML file.",
     long_description=open('README.md').read(),
 
-    install_requires= ['Markdown','markdown-checklist','graphviz','beautifulsoup4'],
+    install_requires=['Markdown','markdown-checklist','graphviz','beautifulsoup4'],
 
 
     include_package_data=True,
@@ -55,6 +55,3 @@ setup(
 
 
 )
-
-
-
